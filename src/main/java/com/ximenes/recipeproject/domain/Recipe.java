@@ -1,6 +1,7 @@
 package com.ximenes.recipeproject.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by berkson
@@ -23,6 +24,15 @@ public class Recipe {
     private String directions;
     //TODO: add
     // private Difficulty difficult;
+
+    /*This says that recipe owns the relationship and
+     mappedBy says that this recipe will be stored on
+     the ingredient property 'recipe'
+     use mappedBy on Many relationships
+     Relation Recipe -> Ingredients
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients;
 
     @Lob // Creates a bytearray or blob on the database.
     private Byte[] image;
