@@ -1,5 +1,7 @@
 package com.ximenes.recipeproject.domain;
 
+import com.ximenes.recipeproject.enums.Difficulty;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -22,8 +24,6 @@ public class Recipe {
     private String source;
     private String url;
     private String directions;
-    //TODO: add
-    // private Difficulty difficult;
 
     /*This says that recipe owns the relationship and
      mappedBy says that this recipe will be stored on
@@ -36,6 +36,9 @@ public class Recipe {
 
     @Lob // Creates a bytearray or blob on the database.
     private Byte[] image;
+
+    @Enumerated(value = EnumType.STRING)
+    private Difficulty difficult;
 
     //if you delete the recipe will delete all notes. this is the owner of relationship
     @OneToOne(cascade = CascadeType.ALL)
@@ -105,12 +108,28 @@ public class Recipe {
         this.directions = directions;
     }
 
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     public Byte[] getImage() {
         return image;
     }
 
     public void setImage(Byte[] image) {
         this.image = image;
+    }
+
+    public Difficulty getDifficult() {
+        return difficult;
+    }
+
+    public void setDifficult(Difficulty difficult) {
+        this.difficult = difficult;
     }
 
     public Notes getNotes() {
