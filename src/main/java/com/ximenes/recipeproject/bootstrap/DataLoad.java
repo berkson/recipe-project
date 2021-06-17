@@ -24,9 +24,9 @@ import java.util.Optional;
 @Component
 public class DataLoad implements ApplicationRunner {
 
-    private CategoryRepository categoryRepository;
-    private RecipeService recipeService;
-    private UnitOfMeasureRepository unitOfMeasureRepository;
+    private final CategoryRepository categoryRepository;
+    private final RecipeService recipeService;
+    private final UnitOfMeasureRepository unitOfMeasureRepository;
 
     @Autowired
     public DataLoad(CategoryRepository categoryRepository, RecipeService recipeService,
@@ -49,6 +49,7 @@ public class DataLoad implements ApplicationRunner {
         Optional<UnitOfMeasure> teaspoonUomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
         Optional<UnitOfMeasure> tablespoonUomOptional = unitOfMeasureRepository.findByDescription("Tablespoon");
         Optional<UnitOfMeasure> pinchUomOptional = unitOfMeasureRepository.findByDescription("Pinch");
+        Optional<UnitOfMeasure> eachUomOptional = unitOfMeasureRepository.findByDescription("Each");
 
         // Ingredients
         Ingredient avocado = new Ingredient();
@@ -69,51 +70,70 @@ public class DataLoad implements ApplicationRunner {
         if (avocado.getAmount().intValue() > 1) {
             avocado.setDescription("Ripe Avocados");
         }
-        recipe.getIngredients().add(avocado);
+        recipe.addIngredient(avocado);
+        avocado.setRecipe(recipe);
+        eachUomOptional.ifPresent(avocado::setUom);
 
-        salt.setAmount(new BigDecimal(1 / 4));
+        salt.setAmount(new BigDecimal("0.25"));
         salt.setDescription("Salt");
         teaspoonUomOptional.ifPresent(salt::setUom);
-        recipe.getIngredients().add(salt);
+        recipe.addIngredient(salt);
+        salt.setRecipe(recipe);
 
         lime.setDescription("Fresh Lime");
         lime.setAmount(new BigDecimal(1));
         tablespoonUomOptional.ifPresent(lime::setUom);
         recipe.getIngredients().add(lime);
+        lime.setRecipe(recipe);
 
         onion.setDescription("Minced red onion");
         onion.setAmount(new BigDecimal(4));
         tablespoonUomOptional.ifPresent(onion::setUom);
         recipe.getIngredients().add(onion);
+        onion.setRecipe(recipe);
 
         chili.setDescription("Serrano (or Jalapeño) chilis, stems and seeds removed, minced");
         chili.setAmount(new BigDecimal(2));
-        recipe.getIngredients().add(chili);
+        eachUomOptional.ifPresent(chili::setUom);
+        recipe.addIngredient(chili);
+        chili.setRecipe(recipe);
 
         cilantro.setDescription("Cilantro (leaves and tender stems), finely chopped");
         cilantro.setAmount(new BigDecimal(2));
         tablespoonUomOptional.ifPresent(cilantro::setUom);
-        recipe.getIngredients().add(cilantro);
+        recipe.addIngredient(cilantro);
+        cilantro.setRecipe(recipe);
 
         pepper.setDescription("freshly ground black pepper");
+        pepper.setAmount(new BigDecimal(2));
         pinchUomOptional.ifPresent(pepper::setUom);
-        recipe.getIngredients().add(pepper);
+        recipe.addIngredient(pepper);
+        pepper.setRecipe(recipe);
 
         tomato.setDescription("ripe tomato, chopped (optional)");
-        tomato.setAmount(new BigDecimal(1 / 2));
+        tomato.setAmount(new BigDecimal("0.5"));
         recipe.getIngredients().add(tomato);
+        tomato.setRecipe(recipe);
+        eachUomOptional.ifPresent(tomato::setUom);
 
         garnish.setDescription("Red radish or jicama slices for garnish (optional)");
-        recipe.getIngredients().add(garnish);
+        garnish.setAmount(new BigDecimal(4));
+        eachUomOptional.ifPresent(garnish::setUom);
+        recipe.addIngredient(garnish);
+        garnish.setRecipe(recipe);
 
         tortilla.setDescription("Tortilla chips, to serve");
-        recipe.getIngredients().add(tortilla);
+        tortilla.setAmount(new BigDecimal(10));
+        eachUomOptional.ifPresent(tortilla::setUom);
+        recipe.addIngredient(tortilla);
+        tortilla.setRecipe(recipe);
+
         recipe.setSource("How to Make the Best Guacamole");
         recipe.setDescription("The best guacamole keeps it simple: just ripe avocados, salt, a squeeze of lime, " +
                 "onions, chilis, cilantro, and some chopped tomato. Serve it as a dip at your next party or " +
                 "spoon it on top of tacos for an easy dinner upgrade");
         recipe.setPrepTime(10);
-        recipe.setCookTime(10);
+        recipe.setCookTime(0);
         recipe.setServings(4);
         note.setRecipeNotes("Note 1: Be careful handling chilis! If using, it's best to wear food-safe gloves. If no gloves are available, " +
                 "wash your hands thoroughly after handling, and do not touch your eyes or the area near " +

@@ -5,23 +5,23 @@
     <title>Recipe Home</title>
 </head>
 <body>
-    <h1>My Recipes</h1>
+<h1>My Recipes</h1>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Título</th>
-            <th>Descrição</th>
-            <th>Url</th>
-        </tr>
-        </thead>
-        <tr th:each="recipe : ${recipes}">
-            <td th:text="${recipe?.getId()}"></td>
-            <td th:text="${recipe?.getSource()}"></td>
-            <td th:text="${recipe?.getDescription()}"></td>
-            <td th:text="${recipe?.getUrl()}"></td>
-        </tr>
-    </table>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Título</th>
+        <th>Descrição</th>
+        <th>Url</th>
+    </tr>
+    </thead>
+    <tr th:each="recipe : ${recipes}">
+        <td th:text="${recipe?.getId()}">123</td>
+        <td th:text="${recipe?.getSource()}">hahah</td>
+        <td th:text="${recipe?.getDescription()}">trash</td>
+        <td th:text="${recipe?.getUrl()}">uol</td>
+    </tr>
+</table>
 </body>
 </html>
