@@ -10,8 +10,7 @@ import java.math.BigDecimal;
  * Date: 14/06/2021
  * Time: 07:10
  */
-@Getter
-@Setter
+@Data
 @EqualsAndHashCode(exclude = "recipe")
 @NoArgsConstructor
 @Entity

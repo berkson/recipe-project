@@ -10,6 +10,7 @@ import javax.persistence.*;
  * Time: 21:40
  */
 @Data
+@EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Notes {
 

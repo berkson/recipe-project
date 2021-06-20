@@ -11,8 +11,7 @@ import java.util.Set;
  * Date: 14/06/2021
  * Time: 11:24
  */
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "recipes")
 @Entity
