@@ -5,6 +5,7 @@ import com.ximenes.recipeproject.enums.Difficulty;
 import com.ximenes.recipeproject.repositories.CategoryRepository;
 import com.ximenes.recipeproject.repositories.UnitOfMeasureRepository;
 import com.ximenes.recipeproject.services.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -21,6 +22,7 @@ import java.util.Optional;
  * Date: 15/06/2021
  * Time: 21:32
  */
+@Slf4j
 @Component
 public class DataLoad implements ApplicationRunner {
 
@@ -38,7 +40,7 @@ public class DataLoad implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-
+        log.debug("Beginning to load objects");
         loadGuacaRecipe();
     }
 
@@ -50,7 +52,7 @@ public class DataLoad implements ApplicationRunner {
         Optional<UnitOfMeasure> tablespoonUomOptional = unitOfMeasureRepository.findByDescription("Tablespoon");
         Optional<UnitOfMeasure> pinchUomOptional = unitOfMeasureRepository.findByDescription("Pinch");
         Optional<UnitOfMeasure> eachUomOptional = unitOfMeasureRepository.findByDescription("Each");
-
+        log.debug("Units of Measure recovered");
         // Ingredients
         Ingredient avocado = new Ingredient();
         Ingredient salt = new Ingredient();
@@ -128,6 +130,8 @@ public class DataLoad implements ApplicationRunner {
         recipe.addIngredient(tortilla);
         tortilla.setRecipe(recipe);
 
+        log.debug("All ingredients added");
+
         recipe.setSource("How to Make the Best Guacamole");
         recipe.setDescription("The best guacamole keeps it simple: just ripe avocados, salt, a squeeze of lime, " +
                 "onions, chilis, cilantro, and some chopped tomato. Serve it as a dip at your next party or " +
@@ -140,6 +144,8 @@ public class DataLoad implements ApplicationRunner {
                 "your eyes for several hours afterwards." +
                 "Note 2: Chilling tomatoes hurts their flavor. So, if you want to add chopped tomato to your guacamole, add it just before serving.");
         recipe.setNotes(note);
+        log.debug("Notes where added");
+
         mexicanCategoryOptional.ifPresent(category -> recipe.getCategories().add(category));
         recipe.setDifficult(Difficulty.MODERATE);
         recipe.setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
@@ -166,11 +172,13 @@ public class DataLoad implements ApplicationRunner {
                 "\n" +
                 "Refrigerate leftover guacamole up to 3 days.");
         // setando a imagem
+        log.debug("Setting the image of the recipe");
         byte[] bytes = new ClassPathResource("static/images/guaca.jpg").getInputStream().readAllBytes();
         Byte[] imageBytes = new Byte[bytes.length];
         Arrays.setAll(imageBytes, n -> bytes[n]);
         recipe.setImage(imageBytes);
         System.out.println("Salvando a receita");
         recipeService.save(recipe);
+        log.debug("Recipe saved! Concluded.");
     }
 }
