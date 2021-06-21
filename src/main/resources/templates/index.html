@@ -3,25 +3,49 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Recipe Home</title>
+
+    <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.4.1/css/bootstrap.min.css"></link>
+
+
 </head>
 <body>
-<h1>My Recipes</h1>
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h1 class="panel-title">My Recipes</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
+                        <table class="table table-hover">
+                            <thead class="thead-inverse">
+                            <tr>
+                                <th>Id</th>
+                                <th>Título</th>
+                            </tr>
+                            </thead>
+                            <tr th:remove="all">
+                                <td th:text="${recipe.getId()}">456</td>
+                                <td th:text="${recipe.getDescription()}">Coco</td>
+                            </tr>
+                            <tr th:remove="all">
+                                <td th:text="${recipe.getId()}">123</td>
+                                <td th:text="${recipe.getDescription()}">trash</td>
+                            </tr>
+                            <tr th:each="recipe : ${recipes}">
+                                <td th:text="${recipe?.getId()}">hahah</td>
+                                <td th:text="${recipe?.getDescription()}">uol</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<table>
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Título</th>
-        <th>Descrição</th>
-        <th>Url</th>
-    </tr>
-    </thead>
-    <tr th:each="recipe : ${recipes}">
-        <td th:text="${recipe?.getId()}">123</td>
-        <td th:text="${recipe?.getSource()}">hahah</td>
-        <td th:text="${recipe?.getDescription()}">trash</td>
-        <td th:text="${recipe?.getUrl()}">uol</td>
-    </tr>
-</table>
 </body>
 </html>
