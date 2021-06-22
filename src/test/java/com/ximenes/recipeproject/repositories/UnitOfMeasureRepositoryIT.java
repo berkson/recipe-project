@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Time: 07:48
  */
 // could be used @SpringBootTest but @DataJpaTest is fast. bring a embedded database and configure jpa to us.
+// this an integration test not a unit test
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 class UnitOfMeasureRepositoryIT {
