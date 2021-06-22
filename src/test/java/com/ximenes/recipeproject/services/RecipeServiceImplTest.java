@@ -42,7 +42,7 @@ class RecipeServiceImplTest {
         recipeService.findAll().iterator().forEachRemaining(recipes::add);
 
         assertEquals(1, recipes.size());
-        // verify if findAll method of recipeRepository is executed 2 times.
+        // verify if findAll method of recipeRepository is executed 1 times.
         verify(recipeRepository, times(1)).findAll();
     }
 }
