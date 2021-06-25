@@ -11,4 +11,6 @@ public interface CrudService<T, ID> {
     T save(T object);
 
     Iterable<T> findAll();
+
+    T findById(Long id);
 }

@@ -33,5 +33,10 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeRepository.findAll();
     }
 
+    @Override
+    public Recipe findById(Long id) {
+        return recipeRepository.findById(id).orElse(null);
+    }
+
 
 }
