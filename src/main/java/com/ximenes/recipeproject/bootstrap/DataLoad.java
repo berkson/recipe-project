@@ -42,6 +42,7 @@ public class DataLoad implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         log.debug("Beginning to load objects");
         loadGuacaRecipe();
+        loadCaipirinhaRecipe();
     }
 
     private void loadGuacaRecipe() throws IOException {
@@ -132,7 +133,8 @@ public class DataLoad implements ApplicationRunner {
 
         log.debug("All ingredients added");
 
-        recipe.setSource("How to Make the Best Guacamole");
+        recipe.setTitle("How to Make the Best Guacamole");
+        recipe.setSource("30 min");
         recipe.setDescription("The best guacamole keeps it simple: just ripe avocados, salt, a squeeze of lime, " +
                 "onions, chilis, cilantro, and some chopped tomato. Serve it as a dip at your next party or " +
                 "spoon it on top of tacos for an easy dinner upgrade");
@@ -174,6 +176,88 @@ public class DataLoad implements ApplicationRunner {
         // setando a imagem
         log.debug("Setting the image of the recipe");
         byte[] bytes = new ClassPathResource("static/images/guaca.jpg").getInputStream().readAllBytes();
+        Byte[] imageBytes = new Byte[bytes.length];
+        Arrays.setAll(imageBytes, n -> bytes[n]);
+        recipe.setImage(imageBytes);
+        System.out.println("Salvando a receita");
+        recipeService.save(recipe);
+        log.debug("Recipe saved! Concluded.");
+    }
+
+    private void loadCaipirinhaRecipe() throws IOException {
+        Recipe recipe = new Recipe();
+        Notes note = new Notes();
+        Optional<Category> brazilianCategoryOptional = categoryRepository.findByDescription("Brazilian");
+        Optional<Category> drinkCategoryOptional = categoryRepository.findByDescription("Drink");
+        Optional<UnitOfMeasure> teaspoonUomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
+        Optional<UnitOfMeasure> tablespoonUomOptional = unitOfMeasureRepository.findByDescription("Tablespoon");
+        Optional<UnitOfMeasure> pinchUomOptional = unitOfMeasureRepository.findByDescription("Pinch");
+        Optional<UnitOfMeasure> eachUomOptional = unitOfMeasureRepository.findByDescription("Each");
+        Optional<UnitOfMeasure> ounceUomOptional = unitOfMeasureRepository.findByDescription("Ounce");
+        log.debug("Units of Measure recovered");
+        // Ingredients
+
+        Ingredient lime = new Ingredient();
+        Ingredient sugar = new Ingredient();
+        Ingredient cachaca = new Ingredient();
+        Ingredient ice = new Ingredient();
+
+
+        lime.setDescription("Fresh Lime");
+        lime.setAmount(new BigDecimal(2));
+        tablespoonUomOptional.ifPresent(lime::setUom);
+        recipe.getIngredients().add(lime);
+        lime.setRecipe(recipe);
+
+        sugar.setDescription("Sugar");
+        sugar.setAmount(new BigDecimal(2));
+        tablespoonUomOptional.ifPresent(sugar::setUom);
+        recipe.getIngredients().add(sugar);
+        sugar.setRecipe(recipe);
+
+        cachaca.setDescription("Cachaca");
+        cachaca.setAmount(new BigDecimal(2));
+        ounceUomOptional.ifPresent(cachaca::setUom);
+        recipe.addIngredient(cachaca);
+        cachaca.setRecipe(recipe);
+
+        ice.setDescription("Crushed Ice");
+        ice.setAmount(new BigDecimal(5));
+        tablespoonUomOptional.ifPresent(ice::setUom);
+        recipe.addIngredient(ice);
+        ice.setRecipe(recipe);
+
+        log.debug("All ingredients added");
+
+        recipe.setTitle("Classic caipirinha cocktail");
+        recipe.setSource("3 min");
+        recipe.setDescription("A caipirinha is a traditional Brazilian cocktail that is made " +
+                "with a mix of muddled limes, sugar, crushed ice, and cachaca. Cachaca, pronounced " +
+                "cachaza, is a popular Brazilian sugar cane " +
+                "liquor, similar to rum and aguardiente.");
+        recipe.setPrepTime(3);
+        recipe.setCookTime(0);
+        recipe.setServings(2);
+        note.setRecipeNotes("Caipirinhas are very strong, the proportion of alcohol to " +
+                "the rest of ingredients is quite high, and it’s a drink that needs to be " +
+                "sipped and enjoyed slowly. It’s one of those drinks where you know " +
+                "you are drinking a real drink, the benefit is that unlike some fruity d" +
+                "rinks where you barely taste the " +
+                "booze –and therefore drink way too much, you know from the start " +
+                "that you probably shouldn’t have too many");
+        recipe.setNotes(note);
+        log.debug("Notes where added");
+
+        brazilianCategoryOptional.ifPresent(category -> recipe.getCategories().add(category));
+        drinkCategoryOptional.ifPresent(category -> recipe.getCategories().add(category));
+        recipe.setDifficult(Difficulty.EASY);
+        recipe.setUrl("https://www.laylita.com/recipes/classic-caipirinha-recipe/");
+        recipe.setDirections("1 .Either directly in a short glass or in a cocktail shaker, combine the lime halves or quarters with the sugar and use a muddler to gently crush and squeeze out the lime juice from the limes.\n" +
+                "2. Add the cachaca and lime juice, stir or shake well. If using a cocktail shaker pour the drink, including the muddled limes, into a short glass with crushed ice. If making the drink directly in the glass, add crushed ice and stir.\n" +
+                "3. Serve immediately garnished with a lime slice.\n");
+        // setando a imagem
+        log.debug("Setting the image of the recipe");
+        byte[] bytes = new ClassPathResource("static/images/caipirinha.jpg").getInputStream().readAllBytes();
         Byte[] imageBytes = new Byte[bytes.length];
         Arrays.setAll(imageBytes, n -> bytes[n]);
         recipe.setImage(imageBytes);

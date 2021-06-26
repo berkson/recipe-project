@@ -2,6 +2,7 @@ package com.ximenes.recipeproject.domain;
 
 import com.ximenes.recipeproject.enums.Difficulty;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import java.util.Set;
  * Time: 21:36
  */
 @Data
+@ToString(exclude = {"ingredients", "notes", "categories"})
 @Entity
 public class Recipe {
 
@@ -20,6 +22,7 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String title;
     private String description;
     private Integer prepTime;
     private Integer cookTime;
