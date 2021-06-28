@@ -149,7 +149,7 @@ public class DataLoad implements ApplicationRunner {
         log.debug("Notes where added");
 
         mexicanCategoryOptional.ifPresent(category -> recipe.getCategories().add(category));
-        recipe.setDifficult(Difficulty.MODERATE);
+        recipe.setDifficulty(Difficulty.MODERATE);
         recipe.setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
         recipe.setDirections("Cut the avocado:\n" +
                 "Cut the avocados in half. Remove the pit. Score the inside of the avocado with a blunt knife and scoop out the " +
@@ -250,7 +250,7 @@ public class DataLoad implements ApplicationRunner {
 
         brazilianCategoryOptional.ifPresent(category -> recipe.getCategories().add(category));
         drinkCategoryOptional.ifPresent(category -> recipe.getCategories().add(category));
-        recipe.setDifficult(Difficulty.EASY);
+        recipe.setDifficulty(Difficulty.EASY);
         recipe.setUrl("https://www.laylita.com/recipes/classic-caipirinha-recipe/");
         recipe.setDirections("1 .Either directly in a short glass or in a cocktail shaker, combine the lime halves or quarters with the sugar and use a muddler to gently crush and squeeze out the lime juice from the limes.\n" +
                 "2. Add the cachaca and lime juice, stir or shake well. If using a cocktail shaker pour the drink, including the muddled limes, into a short glass with crushed ice. If making the drink directly in the glass, add crushed ice and stir.\n" +

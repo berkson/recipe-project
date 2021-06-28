@@ -46,7 +46,7 @@ public class Recipe {
     private Byte[] image;
 
     @Enumerated(value = EnumType.STRING)
-    private Difficulty difficult;
+    private Difficulty difficulty;
 
     //if you delete the recipe will delete all notes. this is the owner of relationship
     @OneToOne(cascade = CascadeType.ALL)
