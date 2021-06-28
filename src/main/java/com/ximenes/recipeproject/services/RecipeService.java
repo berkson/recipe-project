@@ -1,5 +1,6 @@
 package com.ximenes.recipeproject.services;
 
+import com.ximenes.recipeproject.commands.RecipeCommand;
 import com.ximenes.recipeproject.domain.Recipe;
 
 /**
@@ -9,4 +10,5 @@ import com.ximenes.recipeproject.domain.Recipe;
  */
 public interface RecipeService extends CrudService<Recipe, Long> {
 
+    RecipeCommand saveRecipeCommand(RecipeCommand command);
 }

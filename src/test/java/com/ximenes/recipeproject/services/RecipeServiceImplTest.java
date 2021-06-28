@@ -1,5 +1,7 @@
 package com.ximenes.recipeproject.services;
 
+import com.ximenes.recipeproject.converters.RecipeCommandToRecipe;
+import com.ximenes.recipeproject.converters.RecipeToRecipeCommand;
 import com.ximenes.recipeproject.domain.Recipe;
 import com.ximenes.recipeproject.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,10 +28,17 @@ class RecipeServiceImplTest {
     @Mock
     RecipeRepository recipeRepository;
 
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
+
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
+
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
 
     @Test

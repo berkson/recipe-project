@@ -1,9 +1,13 @@
 package com.ximenes.recipeproject.services;
 
+import com.ximenes.recipeproject.commands.RecipeCommand;
+import com.ximenes.recipeproject.converters.RecipeCommandToRecipe;
+import com.ximenes.recipeproject.converters.RecipeToRecipeCommand;
 import com.ximenes.recipeproject.domain.Recipe;
 import com.ximenes.recipeproject.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -16,9 +20,14 @@ import org.springframework.stereotype.Service;
 public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
+    private final RecipeCommandToRecipe converterToRecipe;
+    private final RecipeToRecipeCommand converterToRecipeCommand;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeCommandToRecipe converterToRecipe,
+                             RecipeToRecipeCommand converterToRecipeCommand) {
         this.recipeRepository = recipeRepository;
+        this.converterToRecipe = converterToRecipe;
+        this.converterToRecipeCommand = converterToRecipeCommand;
     }
 
     @Override
@@ -39,4 +48,12 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
 
+    @Override
+    @Transactional
+    public RecipeCommand saveRecipeCommand(RecipeCommand command) {
+        Recipe unwrappedRecipe = converterToRecipe.convert(command);
+        Recipe savedRecipe = this.save(unwrappedRecipe);
+        log.debug("Saved Recipe ID: " + savedRecipe.getId());
+        return converterToRecipeCommand.convert(savedRecipe);
+    }
 }
