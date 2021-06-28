@@ -2,7 +2,9 @@ package com.ximenes.recipeproject.converters;
 
 import com.ximenes.recipeproject.commands.RecipeCommand;
 import com.ximenes.recipeproject.domain.Recipe;
+import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,7 +27,8 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
         this.categoryConverter = categoryConverter;
     }
 
-
+    @Synchronized
+    @Nullable
     @Override
     public RecipeCommand convert(Recipe recipe) {
         if (recipe == null) return null;
