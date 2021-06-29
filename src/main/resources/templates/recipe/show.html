@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:lith="http://www.w3.org/1999/xlink">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>Show Recipe</title>
@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div>
-                <div class="card mb-3" x>
+                <div class="card mb-3">
                     <div class="card-header bg-primary text-white">
                         <h1 class="card-title" style="font-size: 1.5rem;" th:text="${recipe?.getTitle()}">Recipe Description
                             Here!</h1>
@@ -71,7 +71,7 @@
                                 <h5>URL:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p th:text="${recipe.getUrl()}">http://www.example.com</p>
+                                <a th:href="${recipe.getUrl()}" target="_blank">View Site</a>
                             </div>
                         </div>
                     </div>
