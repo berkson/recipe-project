@@ -60,12 +60,12 @@ class IngredientToIngredientCommandTest {
 
         // then
         assertNotNull(command);
-        assertNotNull(command.getUnitOfMeasure());
+        assertNotNull(command.getUom());
         assertEquals(ING_ID, command.getId());
         assertEquals(DESCRIPTION, command.getDescription());
         assertEquals(AMOUNT, command.getAmount());
-        assertEquals(UOM_ID, command.getUnitOfMeasure().getId());
-        assertEquals(UOM_DESCRIPTION, command.getUnitOfMeasure().getDescription());
+        assertEquals(UOM_ID, command.getUom().getId());
+        assertEquals(UOM_DESCRIPTION, command.getUom().getDescription());
     }
 
     @Test
@@ -82,7 +82,7 @@ class IngredientToIngredientCommandTest {
 
         // then
         assertNotNull(command);
-        assertNull(command.getUnitOfMeasure());
+        assertNull(command.getUom());
         assertEquals(ING_ID, command.getId());
         assertEquals(DESCRIPTION, command.getDescription());
         assertEquals(AMOUNT, command.getAmount());

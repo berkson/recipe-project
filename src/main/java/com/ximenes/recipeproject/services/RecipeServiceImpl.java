@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 
 /**
  * Created by Berkson Ximenes
@@ -55,5 +57,15 @@ public class RecipeServiceImpl implements RecipeService {
         Recipe savedRecipe = this.save(unwrappedRecipe);
         log.debug("Saved Recipe ID: " + savedRecipe.getId());
         return converterToRecipeCommand.convert(savedRecipe);
+    }
+
+    @Override
+    @Transactional // it's better to use cause the conversion
+    public RecipeCommand findCommandById(Long id) {
+        Optional<Recipe> recipeOptional = recipeRepository.findById(id);
+        if (recipeOptional.isPresent()) {
+            return converterToRecipeCommand.convert(recipeOptional.get());
+        }
+        return null;
     }
 }

@@ -11,4 +11,6 @@ import com.ximenes.recipeproject.domain.Recipe;
 public interface RecipeService extends CrudService<Recipe, Long> {
 
     RecipeCommand saveRecipeCommand(RecipeCommand command);
+
+    RecipeCommand findCommandById(Long id);
 }
