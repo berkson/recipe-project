@@ -13,4 +13,6 @@ public interface CrudService<T, ID> {
     Iterable<T> findAll();
 
     T findById(Long id);
+
+    void deleteById(Long id);
 }

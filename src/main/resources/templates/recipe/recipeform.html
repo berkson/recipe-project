@@ -18,14 +18,15 @@
                 <div>
                     <div class="card mb-3">
                         <div class="card-header bg-primary text-white">
-                            <h1 class="card-title ">Edit Recipe Information</h1>
+                            <h1 class="card-title " style="font-size: 1.3rem">Edit Recipe Information</h1>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-3 form-group">
                                     <label>Recipe Title:</label>
                                     <input type="text" class="form-control" th:field="*{title}"/>
-                                </div><div class="col-md-6 form-group">
+                                </div>
+                                <div class="col-md-6 form-group">
                                     <label>Recipe Description:</label>
                                     <!-- the * is for an attribute from object recipe -> recipe*description  -->
                                     <input type="text" class="form-control" th:field="*{description}"/>
@@ -47,7 +48,8 @@
                                             <input type="checkbox" value=""/>
                                             Cat 2
                                         </label>
-                                    </div><div class="radio" th:remove="all">
+                                    </div>
+                                    <div class="radio" th:remove="all">
                                         <label>
                                             <input type="checkbox" value=""/>
                                             Cat 3
@@ -92,11 +94,12 @@
                     <div class="card mb-3">
                         <div class="card-header bg-primary text-white">
                             <div class="row">
-                                <div class="col-md-10">
-                                    <h1 class="card-title">Ingredients</h1>
+                                <div class="col-md-11">
+                                    <h1 class="card-title" style="font-size: 1.3rem">Ingredients</h1>
                                 </div>
-                                <div class="col-md-1 position-relative">
-                                    <a class="btn btn-light" href="#" role="button">Edit</a>
+                                <div class="col-md-1">
+                                    <a class="btn btn-light" href="#"
+                                       th:href="@{'/recipe/' + ${recipe.getId()} + '/ingredients'}" role="button">Edit</a>
                                 </div>
                             </div>
                         </div>
@@ -118,7 +121,7 @@
                     </div>
                     <div class="card mb-3">
                         <div class="card-header bg-primary text-white">
-                            <h1 class="panel-title">Directions</h1>
+                            <h1 class="card-title" style="font-size: 1.3rem">Directions</h1>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -129,7 +132,7 @@
                     </div>
                     <div class="card mb-3">
                         <div class="card-header bg-primary text-white">
-                            <h1 class="panel-title">Notes</h1>
+                            <h1 class="card-title" style="font-size: 1.3rem">Notes</h1>
                         </div>
                         <div class="card-body">
                             <div class="row">

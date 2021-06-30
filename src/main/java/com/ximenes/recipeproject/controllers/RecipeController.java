@@ -2,18 +2,17 @@ package com.ximenes.recipeproject.controllers;
 
 import com.ximenes.recipeproject.commands.RecipeCommand;
 import com.ximenes.recipeproject.services.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Berkson Ximenes
  * Date: 24/06/2021
  * Time: 23:33
  */
+@Slf4j
 @Controller
 public class RecipeController {
 
@@ -47,5 +46,13 @@ public class RecipeController {
     public String saveOrUpdate(@ModelAttribute RecipeCommand command) {
         RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
         return String.format("redirect:/recipe/%d/show", savedCommand.getId());
+    }
+
+    //we can do this with get mapping without enable hidden method filter at applications.properties
+    @RequestMapping(path = "/recipe/{id}/delete", method = RequestMethod.DELETE)
+    public String deleteRecipeById(@PathVariable String id) {
+        log.debug("Deleting id: " + id);
+        recipeService.deleteById(Long.valueOf(id));
+        return "redirect:/";
     }
 }

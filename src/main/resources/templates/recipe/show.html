@@ -17,8 +17,8 @@
                 <div class="card mb-3">
                     <div class="card-header bg-primary text-white">
                         <div class="row">
-                            <div class="col-md-10">
-                                <h1 class="card-title" style="font-size: 1.5rem;" th:text="${recipe?.getTitle()}">Recipe
+                            <div class="col-md-11">
+                                <h1 class="card-title" style="font-size: 1.3rem;" th:text="${recipe?.getTitle()}">Recipe
                                     Description
                                     Here!</h1>
                             </div>
@@ -86,11 +86,19 @@
                 </div>
                 <div class="card mb-3">
                     <div class="card-header bg-primary text-white">
-                        <h1 class="card-title" style="font-size: 1.5rem;">Ingredients</h1>
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h1 class="card-title" style="font-size: 1.3rem;">Ingredients</h1>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="btn btn-light" href="#"
+                                   th:href="@{'/recipe/' + ${recipe.getId()} + '/ingredients'}" role="button">View</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-11">
                                 <ul th:each="ingredient : ${recipe.getIngredients()}">
                                     <li th:text="${ingredient.getAmount() +
                                     ' '  + ingredient.getUom().getDescription() +
@@ -104,7 +112,7 @@
                 </div>
                 <div class="card mb-3">
                     <div class="card-header bg-primary text-white">
-                        <h1 class="card-title" style="font-size: 1.5rem;">Directions</h1>
+                        <h1 class="card-title" style="font-size: 1.3rem;">Directions</h1>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -139,7 +147,7 @@
                 </div>
                 <div class="card mb-3">
                     <div class="card-header bg-primary text-white">
-                        <h1 class="card-title" style="font-size: 1.5rem;">Notes</h1>
+                        <h1 class="card-title" style="font-size: 1.3rem;">Notes</h1>
                     </div>
                     <div class="card-body">
                         <div class="row">

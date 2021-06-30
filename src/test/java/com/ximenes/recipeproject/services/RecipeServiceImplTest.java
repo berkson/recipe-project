@@ -34,7 +34,6 @@ class RecipeServiceImplTest {
     @Mock
     RecipeCommandToRecipe recipeCommandToRecipe;
 
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -70,5 +69,17 @@ class RecipeServiceImplTest {
         assertEquals(1, recipes.size());
         // verify if findAll method of recipeRepository is executed 1 times.
         verify(recipeRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testDeleteById() {
+        //given
+        Long idToDelete = 1L;
+        recipeService.deleteById(idToDelete);
+
+        //no 'when' cause since method has void return type
+
+        //then
+        verify(recipeRepository, times(1)).deleteById(anyLong());
     }
 }
