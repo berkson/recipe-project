@@ -1,5 +1,6 @@
 package com.ximenes.recipeproject.services;
 
+import com.ximenes.recipeproject.converters.IngredientToIngredientCommand;
 import com.ximenes.recipeproject.converters.RecipeCommandToRecipe;
 import com.ximenes.recipeproject.converters.RecipeToRecipeCommand;
 import com.ximenes.recipeproject.domain.Recipe;
@@ -34,10 +35,15 @@ class RecipeServiceImplTest {
     @Mock
     RecipeCommandToRecipe recipeCommandToRecipe;
 
+    @Mock
+    IngredientToIngredientCommand converterToIngredientCommand;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
+
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe,
+                recipeToRecipeCommand);
     }
 
     @Test

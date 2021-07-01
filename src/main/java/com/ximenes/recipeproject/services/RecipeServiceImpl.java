@@ -51,7 +51,12 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe findById(Long id) {
-        return recipeRepository.findById(id).orElse(null);
+        Optional<Recipe> recipeOptional = recipeRepository.findById(id);
+        if (recipeOptional.isPresent()) {
+            return recipeOptional.get();
+        } else {
+            throw new RuntimeException("Recipe Not Found");
+        }
     }
 
 
