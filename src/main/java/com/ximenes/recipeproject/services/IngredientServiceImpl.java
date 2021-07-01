@@ -45,4 +45,15 @@ public class IngredientServiceImpl implements IngredientService {
 
         return ingredientCommand.get();
     }
+
+    @Override
+    public IngredientCommand saveIngredientCommand(IngredientCommand command) {
+        Optional<Recipe> recipeOptional = recipeRepository.findById(command.getRecipeId());
+
+        if(recipeOptional.isEmpty()) return new IngredientCommand();
+
+        //todo acabar de implementar esse método
+
+        return null;
+    }
 }

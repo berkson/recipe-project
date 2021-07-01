@@ -4,6 +4,7 @@ import com.ximenes.recipeproject.commands.IngredientCommand;
 import com.ximenes.recipeproject.commands.RecipeCommand;
 import com.ximenes.recipeproject.services.IngredientService;
 import com.ximenes.recipeproject.services.RecipeService;
+import com.ximenes.recipeproject.services.UnitOfMeasureService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -29,6 +30,9 @@ class IngredientControllerTest {
     @Mock
     IngredientService ingredientService;
 
+    @Mock
+    UnitOfMeasureService unitOfMeasureService;
+
     IngredientController ingredientController;
 
     MockMvc mockMvc;
@@ -36,7 +40,7 @@ class IngredientControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        ingredientController = new IngredientController(recipeService, ingredientService);
+        ingredientController = new IngredientController(recipeService, ingredientService, unitOfMeasureService);
         mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
     }
 
