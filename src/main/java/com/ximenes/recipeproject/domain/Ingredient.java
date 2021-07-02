@@ -1,6 +1,9 @@
 package com.ximenes.recipeproject.domain;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,7 +13,8 @@ import java.math.BigDecimal;
  * Date: 14/06/2021
  * Time: 07:10
  */
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(exclude = "recipe")
 @NoArgsConstructor
 @Entity

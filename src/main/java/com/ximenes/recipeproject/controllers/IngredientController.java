@@ -1,16 +1,15 @@
 package com.ximenes.recipeproject.controllers;
 
 import com.ximenes.recipeproject.commands.IngredientCommand;
+import com.ximenes.recipeproject.commands.RecipeCommand;
+import com.ximenes.recipeproject.commands.UnitOfMeasureCommand;
 import com.ximenes.recipeproject.services.IngredientService;
 import com.ximenes.recipeproject.services.RecipeService;
 import com.ximenes.recipeproject.services.UnitOfMeasureService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Berkson Ximenes
@@ -48,6 +47,32 @@ public class IngredientController {
                 .findByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(id)));
 
         return "recipe/ingredient/show";
+    }
+
+    @GetMapping("/recipe/{recipeId}/ingredient/new")
+    public String newIngredient(@PathVariable String recipeId, Model model) {
+
+        //make sure we have a good id value
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+        //todo: raise exception if null
+
+        //need to return back parent id for hidden form property
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        //init uom
+        ingredientCommand.setUom(new UnitOfMeasureCommand());
+
+        model.addAttribute("ingredient", ingredientCommand);
+        model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
+
+        return "recipe/ingredient/ingredientform";
+    }
+
+    @RequestMapping(path = "/recipe/{recipeId}/ingredient/{id}/delete", method = RequestMethod.DELETE)
+    public String deleteIngredient(@PathVariable String id, @PathVariable String recipeId) {
+        log.debug("Deleting ingredient id: " + id);
+        ingredientService.deleteById(Long.valueOf(recipeId), Long.valueOf(id));
+        return String.format("redirect:/recipe/%s/ingredients", recipeId);
     }
 
     @GetMapping("/recipe/{recipeId}/ingredient/{id}/update")

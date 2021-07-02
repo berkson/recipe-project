@@ -87,10 +87,13 @@
                 <div class="card mb-3">
                     <div class="card-header bg-primary text-white">
                         <div class="row">
-                            <div class="col-md-11">
+                            <div class="col-md-10">
                                 <h1 class="card-title" style="font-size: 1.3rem;">Ingredients</h1>
                             </div>
                             <div class="col-md-1">
+                                <a class="btn btn-light" href="#"
+                                   th:href="@{'/recipe/' + ${recipe.getId()} + '/ingredient/new'}" role="button">New</a>
+                            </div><div class="col-md-1">
                                 <a class="btn btn-light" href="#"
                                    th:href="@{'/recipe/' + ${recipe.getId()} + '/ingredients'}" role="button">View</a>
                             </div>

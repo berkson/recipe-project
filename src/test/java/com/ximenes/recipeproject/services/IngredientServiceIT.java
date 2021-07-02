@@ -54,7 +54,7 @@ public class IngredientServiceIT {
         Iterable<Recipe> recipes = recipeService.findAll();
         Recipe testRecipe = recipes.iterator().next();
         assertNotNull(testRecipe.getIngredients());
-        Long ingId = testRecipe.getIngredients().stream().findFirst().get().getId();
+        Long ingId = testRecipe.getIngredients().stream().findFirst().map(Ingredient::getId).orElse(0L);
         String ingDescription = testRecipe.getIngredients()
                 .stream().filter(ingredient -> ingredient.getId().equals(ingId))
                 .map(Ingredient::getDescription).collect(Collectors.joining());
@@ -100,5 +100,22 @@ public class IngredientServiceIT {
         assertNotNull(command);
         assertEquals(ingQuantity + 1, testRecipe.getIngredients().size());
         assertEquals(NEW, command.getDescription());
+    }
+
+    @Test
+    @Transactional
+    void testDeleteById() {
+        //given
+        Iterable<Recipe> recipes = recipeService.findAll();
+        Recipe testRecipe = recipes.iterator().next();
+        Long ingredient_id = testRecipe.getIngredients().stream().iterator().next().getId();
+        assertNotNull(testRecipe.getIngredients());
+
+        //when
+        ingredientService.deleteById(testRecipe.getId(), ingredient_id);
+
+        //then
+        assertFalse(testRecipe.getIngredients()
+                .stream().anyMatch(ingredient -> ingredient.getId().equals(ingredient_id)));
     }
 }
