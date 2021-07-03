@@ -5,6 +5,7 @@ import com.ximenes.recipeproject.converters.IngredientCommandToIngredient;
 import com.ximenes.recipeproject.converters.IngredientToIngredientCommand;
 import com.ximenes.recipeproject.domain.Ingredient;
 import com.ximenes.recipeproject.domain.Recipe;
+import com.ximenes.recipeproject.repositories.IngredientRepository;
 import com.ximenes.recipeproject.repositories.RecipeRepository;
 import com.ximenes.recipeproject.repositories.UnitOfMeasureRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,8 @@ public class IngredientServiceImpl implements IngredientService {
     private final IngredientToIngredientCommand converterToIngredientCommand;
     private final IngredientCommandToIngredient converterToIngredient;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
+    //used to remove ingredient from recipe using jpa repository
+    //private final IngredientRepository ingredientRepository;
 
     public IngredientServiceImpl(RecipeRepository recipeRepository,
                                  IngredientToIngredientCommand converterToIngredientCommand,
@@ -94,14 +97,22 @@ public class IngredientServiceImpl implements IngredientService {
                             .stream().max(Comparator.comparing(Ingredient::getId)).orElse(null));
         }
     }
+    //used to remove the ingredient from the table ingredients
+//    @Override
+//    @Transactional
+//    public void deleteById(Long recipeId, Long idToDelete) {
+//        ingredientRepository.deleteByRecipeIdAndId(recipeId, idToDelete);
+//    }
 
+
+    // this method does not work properly. it only sets the recipe_id to null in the database
     @Override
     public void deleteById(Long recipeId, Long idToDelete) {
         log.debug("Deleting ingredient: " + recipeId + ":" + idToDelete);
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
-        if(recipeOptional.isPresent()){
+        if (recipeOptional.isPresent()) {
             Recipe recipe = recipeOptional.get();
             log.debug("found recipe");
 
@@ -111,7 +122,7 @@ public class IngredientServiceImpl implements IngredientService {
                     .filter(ingredient -> ingredient.getId().equals(idToDelete))
                     .findFirst();
             // not deleting the row at ingredient table.
-            if(ingredientOptional.isPresent()){
+            if (ingredientOptional.isPresent()) {
                 log.debug("found Ingredient");
                 Ingredient ingredientToDelete = ingredientOptional.get();
                 ingredientToDelete.setRecipe(null);

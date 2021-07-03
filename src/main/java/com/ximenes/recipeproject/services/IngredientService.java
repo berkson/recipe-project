@@ -1,6 +1,8 @@
 package com.ximenes.recipeproject.services;
 
 import com.ximenes.recipeproject.commands.IngredientCommand;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * Created by Berkson Ximenes
