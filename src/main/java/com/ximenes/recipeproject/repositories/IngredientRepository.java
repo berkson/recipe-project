@@ -16,7 +16,7 @@ public interface IngredientRepository extends CrudRepository<Ingredient, Long> {
 
     //used to remove the ingredient from the table ingredients
     @Modifying
-    @Query(value = "delete from Ingredient i where i.recipe_id = ?1 and i.id = ?2",
+    @Query(value = "DELETE FROM ingredient i WHERE i.recipe_id = ?1 and i.id = ?2",
             nativeQuery = true)
     void deleteByRecipeIdAndId(Long recipeId, Long idToDelete);
 }
