@@ -68,10 +68,11 @@
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Difficulty:</label>
-                                    <select class="form-control">
-                                        <option>Easy</option>
-                                        <option>Medium</option>
-                                        <option>Hard</option>
+                                    <select class="form-control" th:field="*{difficulty}">
+                                        <option th:each="difficultyValue: ${T(com.ximenes.recipeproject.enums.Difficulty).values()}"
+                                                th:value="${difficultyValue.name()}"
+                                                th:text="${#strings.capitalize(difficultyValue.name().toLowerCase())}">Hard
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -99,7 +100,8 @@
                                 </div>
                                 <div class="col-md-1">
                                     <a class="btn btn-light" href="#"
-                                       th:href="@{'/recipe/' + ${recipe.getId()} + '/ingredients'}" role="button">Edit</a>
+                                       th:href="@{'/recipe/' + ${recipe.getId()} + '/ingredients'}"
+                                       role="button">Edit</a>
                                 </div>
                             </div>
                         </div>
