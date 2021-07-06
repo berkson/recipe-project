@@ -17,13 +17,17 @@
                 <div class="card mb-3">
                     <div class="card-header bg-primary text-white">
                         <div class="row">
-                            <div class="col-md-11">
+                            <div class="col-md-9">
                                 <h1 class="card-title" style="font-size: 1.3rem;" th:text="${recipe?.getTitle()}">Recipe
                                     Description
                                     Here!</h1>
                             </div>
+                            <div class="col-md-2">
+                                <a class="btn btn-light btn-sm" href="#"
+                                   th:href="@{'/recipe/' + ${recipe.id} + '/image'}" role="button">Change Image</a>
+                            </div>
                             <div class="col-md-1">
-                                <a class="btn btn-light" href="/" role="button">Home</a>
+                                <a class="btn btn-light btn-sm" href="/" role="button">Home</a>
                             </div>
                         </div>
                     </div>
@@ -32,12 +36,18 @@
                             <div class="col-md-3">
                                 <h5>Categories:</h5>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-3">
                                 <ul th:each="category : ${recipe.getCategories()}">
                                     <li th:remove="all">cat one</li>
                                     <li th:remove="all">cat one</li>
                                     <li th:text="${category.getDescription()}">cat one</li>
                                 </ul>
+                            </div>
+                            <div class="col-md-3">
+                                <img th:src="@{~/images/guacamole400x400WithX.jpg}"
+                                     src="/images/guacamole400x400WithX.jpg" alt="Not Found"
+                                     width="200"
+                                     height="200">
                             </div>
                         </div>
                         <div class="row">
@@ -93,7 +103,8 @@
                             <div class="col-md-1">
                                 <a class="btn btn-light" href="#"
                                    th:href="@{'/recipe/' + ${recipe.getId()} + '/ingredient/new'}" role="button">New</a>
-                            </div><div class="col-md-1">
+                            </div>
+                            <div class="col-md-1">
                                 <a class="btn btn-light" href="#"
                                    th:href="@{'/recipe/' + ${recipe.getId()} + '/ingredients'}" role="button">View</a>
                             </div>
