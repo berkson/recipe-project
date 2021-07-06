@@ -43,8 +43,14 @@
                                     <li th:text="${category.getDescription()}">cat one</li>
                                 </ul>
                             </div>
+<!--                            <div class="col-md-3">-->
+<!--                                <img th:src="@{/../images/guacamole400x400WithX.jpg}"-->
+<!--                                     src="/images/guacamole400x400WithX.jpg" alt="Not Found"-->
+<!--                                     width="200"-->
+<!--                                     height="200">-->
+<!--                            </div>-->
                             <div class="col-md-3">
-                                <img th:src="@{~/images/guacamole400x400WithX.jpg}"
+                                <img th:src="@{'/recipe/' + ${recipe.getId()} + '/recipeimage'}"
                                      src="/images/guacamole400x400WithX.jpg" alt="Not Found"
                                      width="200"
                                      height="200">

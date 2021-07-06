@@ -2,6 +2,7 @@ package com.ximenes.recipeproject.controllers;
 
 import com.ximenes.recipeproject.services.ImageService;
 import com.ximenes.recipeproject.services.RecipeService;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 /**
  * Created by Berkson Ximenes
@@ -37,5 +42,22 @@ public class ImageController {
         imageService.saveImageFile(Long.valueOf(id), file);
 
         return String.format("redirect:/recipe/%s/show", id);
+    }
+
+    @GetMapping(value = "/recipe/{id}/recipeimage")
+    public void renderImageFromDb(@PathVariable String id, HttpServletResponse response) throws Exception {
+        Byte[] image =  recipeService.findCommandById(Long.valueOf(id)).getImage();
+
+        byte[] bytes = new byte[image.length];
+
+        int i = 0;
+
+        for (Byte b : image){
+            bytes[i++] = b;
+        }
+
+        response.setContentType("image/jpeg");
+        InputStream is = new ByteArrayInputStream(bytes);
+        IOUtils.copy(is, response.getOutputStream());
     }
 }
