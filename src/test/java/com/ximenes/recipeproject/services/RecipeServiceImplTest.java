@@ -47,7 +47,7 @@ class RecipeServiceImplTest {
     }
 
     @Test
-    void getRecipeByIdTest() throws Exception {
+    void getRecipeByIdTest() {
         Recipe recipe = new Recipe();
         recipe.setId(1L);
         Optional<Recipe> recipeOptional = Optional.of(recipe);
@@ -78,7 +78,7 @@ class RecipeServiceImplTest {
     }
 
     @Test
-    void getRecipeByIdTestNotFound() throws Exception {
+    void getRecipeByIdTestNotFound() {
         Optional<Recipe> recipeOptional = Optional.empty();
 
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
@@ -86,8 +86,6 @@ class RecipeServiceImplTest {
         assertThrows(NotFoundException.class, () -> {
             Recipe recipeReturned = recipeService.findById(1L);
         });
-
-
     }
 
     @Test
