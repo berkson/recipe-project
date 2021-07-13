@@ -1,11 +1,14 @@
 package com.ximenes.recipeproject.controllers;
 
 import com.ximenes.recipeproject.commands.RecipeCommand;
+import com.ximenes.recipeproject.exceptions.NotFoundException;
 import com.ximenes.recipeproject.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by Berkson Ximenes
@@ -54,5 +57,18 @@ public class RecipeController {
         log.debug("Deleting id: " + id);
         recipeService.deleteById(Long.valueOf(id));
         return "redirect:/";
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public ModelAndView handleNotFound(Exception exception) {
+        log.error("Handling not found exception");
+        log.error(exception.getMessage());
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("/errors/404error");
+        modelAndView.addObject("exception", exception);
+        return modelAndView;
     }
 }
