@@ -44,7 +44,8 @@ class IngredientControllerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         ingredientController = new IngredientController(recipeService, ingredientService, unitOfMeasureService);
-        mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(ingredientController)
+                .setControllerAdvice(new ControllerExceptionHandler()).build();
     }
 
     @Test
@@ -95,6 +96,16 @@ class IngredientControllerTest {
                 .andExpect(model().attributeExists("uomList"));
 
         verify(recipeService, times(1)).findCommandById(anyLong());
+
+    }
+
+    @Test
+    void testNewIngredientFormFormatException() throws Exception {
+        //given
+        mockMvc.perform(get("/recipe/sddf/ingredient/new"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("/errors/400error"))
+                .andExpect(model().attributeExists("exception"));
 
     }
 
