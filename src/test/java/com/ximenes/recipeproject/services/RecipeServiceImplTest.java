@@ -4,6 +4,7 @@ import com.ximenes.recipeproject.converters.IngredientToIngredientCommand;
 import com.ximenes.recipeproject.converters.RecipeCommandToRecipe;
 import com.ximenes.recipeproject.converters.RecipeToRecipeCommand;
 import com.ximenes.recipeproject.domain.Recipe;
+import com.ximenes.recipeproject.exceptions.NotFoundException;
 import com.ximenes.recipeproject.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +15,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -59,6 +59,18 @@ class RecipeServiceImplTest {
         assertNotNull(recipeReturned);
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, never()).findAll();
+    }
+
+    @Test
+    void getRecipeByIdTestHotFound() throws Exception {
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        assertThrows(NotFoundException.class, () -> {
+            Recipe recipeReturned = recipeService.findById(1L);
+        });
+
     }
 
     @Test

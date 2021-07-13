@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * Time: 00:02
  */
 @Repository
-public interface IngredientRepository extends CrudRepository<Ingredient, Long> {
+public interface  IngredientRepository extends CrudRepository<Ingredient, Long> {
 
     //used to remove the ingredient from the table ingredients
     @Modifying

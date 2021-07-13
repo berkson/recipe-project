@@ -4,6 +4,7 @@ import com.ximenes.recipeproject.commands.RecipeCommand;
 import com.ximenes.recipeproject.converters.RecipeCommandToRecipe;
 import com.ximenes.recipeproject.converters.RecipeToRecipeCommand;
 import com.ximenes.recipeproject.domain.Recipe;
+import com.ximenes.recipeproject.exceptions.NotFoundException;
 import com.ximenes.recipeproject.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,7 @@ public class RecipeServiceImpl implements RecipeService {
         if (recipeOptional.isPresent()) {
             return recipeOptional.get();
         } else {
-            throw new RuntimeException("Recipe Not Found");
+            throw new NotFoundException("Recipe Not Found");
         }
     }
 

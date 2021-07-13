@@ -2,6 +2,7 @@ package com.ximenes.recipeproject.controllers;
 
 import com.ximenes.recipeproject.commands.RecipeCommand;
 import com.ximenes.recipeproject.domain.Recipe;
+import com.ximenes.recipeproject.exceptions.NotFoundException;
 import com.ximenes.recipeproject.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -91,6 +92,15 @@ class RecipeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"))
                 .andExpect(model().attributeExists("recipe"));
+    }
+
+    // see the annotation at class level in NotFoundException.class
+    @Test
+    void testGetRecipeNotFound() throws Exception {
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound());
     }
 
     @Test
