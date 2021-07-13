@@ -52,7 +52,9 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe findById(Long id) {
+
         Optional<Recipe> recipeOptional = recipeRepository.findById(id);
+
         if (recipeOptional.isPresent()) {
             return recipeOptional.get();
         } else {
