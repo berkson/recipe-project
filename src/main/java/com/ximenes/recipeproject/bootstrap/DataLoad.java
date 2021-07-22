@@ -41,11 +41,12 @@ public class DataLoad implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         log.debug("Beginning to load objects");
-        loadGuacaRecipe();
-        loadCaipirinhaRecipe();
+
+        recipeService.save(loadGuacaRecipe());
+        recipeService.save(loadCaipirinhaRecipe());
     }
 
-    private void loadGuacaRecipe() throws IOException {
+    private Recipe loadGuacaRecipe() throws IOException {
         Recipe recipe = new Recipe();
         Notes note = new Notes();
         Optional<Category> mexicanCategoryOptional = categoryRepository.findByDescription("Mexican");
@@ -182,9 +183,11 @@ public class DataLoad implements ApplicationRunner {
         System.out.println("Salvando a receita");
         recipeService.save(recipe);
         log.debug("Recipe saved! Concluded.");
+
+        return recipe;
     }
 
-    private void loadCaipirinhaRecipe() throws IOException {
+    private Recipe loadCaipirinhaRecipe() throws IOException {
         Recipe recipe = new Recipe();
         Notes note = new Notes();
         Optional<Category> brazilianCategoryOptional = categoryRepository.findByDescription("Brazilian");
@@ -264,5 +267,6 @@ public class DataLoad implements ApplicationRunner {
         System.out.println("Salvando a receita");
         recipeService.save(recipe);
         log.debug("Recipe saved! Concluded.");
+        return recipe;
     }
 }

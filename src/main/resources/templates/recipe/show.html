@@ -40,7 +40,7 @@
                                 <ul th:each="category : ${recipe.getCategories()}">
                                     <li th:remove="all">cat one</li>
                                     <li th:remove="all">cat one</li>
-                                    <li th:text="${category.getDescription()}">cat one</li>
+                                    <li th:text="${category?.getDescription()}">cat one</li>
                                 </ul>
                             </div>
 <!--                            <div class="col-md-3">-->
@@ -121,8 +121,8 @@
                             <div class="col-md-11">
                                 <ul th:each="ingredient : ${recipe.getIngredients()}">
                                     <li th:text="${ingredient.getAmount() +
-                                    ' '  + ingredient.getUom().getDescription() +
-                                    ' - ' + ingredient.getDescription()}">
+                                    ' '  + ingredient.getUom()?.getDescription() +
+                                    ' - ' + ingredient?.getDescription()}">
                                         1 Cup of milk
                                     </li>
                                 </ul>
