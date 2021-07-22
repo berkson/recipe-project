@@ -24,7 +24,7 @@ jobs:
           command: mvn test cobertura:cobertura
 
       # test coverage with codecov
-     - run:
+      - run:
           name: Send to CodeCov
           command: bash <(curl -s https://codecov.io/bash)
 
